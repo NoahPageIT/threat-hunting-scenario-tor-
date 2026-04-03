@@ -104,61 +104,48 @@ DeviceNetworkEvents
 
 ## Chronological Event Timeline 
 
-### 1. File Download - TOR Installer
+## 05:02:36 AM UTC — Silent Tor Browser Installation
+User noahlab executed the Tor Browser installer directly from their Downloads folder using a silent install flag, bypassing any visible installation prompt or UAC warning. This was a deliberate and covert action.
+Command executed:
+tor-browser-windows-x86_64-portable-15.0.8.exe /S
 
-- **Timestamp:** `2024-11-08T22:14:48.6065231Z`
-- **Event:** The user "employee" downloaded a file named `tor-browser-windows-x86_64-portable-14.0.1.exe` to the Downloads folder.
-- **Action:** File download detected.
-- **File Path:** `C:\Users\employee\Downloads\tor-browser-windows-x86_64-portable-14.0.1.exe`
 
-### 2. Process Execution - TOR Browser Installation
+Source: DeviceProcessEvents
 
-- **Timestamp:** `2024-11-08T22:16:47.4484567Z`
-- **Event:** The user "employee" executed the file `tor-browser-windows-x86_64-portable-14.0.1.exe` in silent mode, initiating a background installation of the TOR Browser.
-- **Action:** Process creation detected.
-- **Command:** `tor-browser-windows-x86_64-portable-14.0.1.exe /S`
-- **File Path:** `C:\Users\employee\Downloads\tor-browser-windows-x86_64-portable-14.0.1.exe`
+## 05:03:14 AM UTC — Tor Establishes Live Network Connection
+Within seconds of installation, tor.exe successfully established an outbound connection to external IP 79.194.243.79 over port 9001 — a known Tor relay port — confirming Tor was live and actively connected to the Tor network. Additional connections were made over ports 80 and 443 consistent with Tor bridge traffic blending into normal web traffic.
+Process path:
+C:\Users\noahlab\Desktop\Tor Browser\Browser\TorBrowser\Tor\tor.exe
 
-### 3. Process Execution - TOR Browser Launch
 
-- **Timestamp:** `2024-11-08T22:17:21.6357935Z`
-- **Event:** User "employee" opened the TOR browser. Subsequent processes associated with TOR browser, such as `firefox.exe` and `tor.exe`, were also created, indicating that the browser launched successfully.
-- **Action:** Process creation of TOR browser-related executables detected.
-- **File Path:** `C:\Users\employee\Desktop\Tor Browser\Browser\TorBrowser\Tor\tor.exe`
+Source: DeviceNetworkEvents
 
-### 4. Network Connection - TOR Network
+## 05:07:36 AM UTC — Tor Browser Opened by User
+User noahlab manually launched the Tor Browser. Multiple instances of firefox.exe (Tor's underlying browser engine) and tor.exe were spawned as child processes, confirming active browser usage, not just a background process.
+Source: DeviceProcessEvents
 
-- **Timestamp:** `2024-11-08T22:18:01.1246358Z`
-- **Event:** A network connection to IP `176.198.159.33` on port `9001` by user "employee" was established using `tor.exe`, confirming TOR browser network activity.
-- **Action:** Connection success.
-- **Process:** `tor.exe`
-- **File Path:** `c:\users\employee\desktop\tor browser\browser\torbrowser\tor\tor.exe`
+## 05:12:42 AM UTC — Tor Files Copied to Desktop & Suspicious File Created
+A large number of Tor-related files were copied to the Desktop. Notably, a file named "tor-shoppinglist" was created on the Desktop at this exact timestamp, suggesting the user was actively using the Tor Browser to conduct activity they deliberately wanted to document or reference.
+File created:
+C:\Users\noahlab\Desktop\tor-shoppinglist
 
-### 5. Additional Network Connections - TOR Browser Activity
 
-- **Timestamps:**
-  - `2024-11-08T22:18:08Z` - Connected to `194.164.169.85` on port `443`.
-  - `2024-11-08T22:18:16Z` - Local connection to `127.0.0.1` on port `9150`.
-- **Event:** Additional TOR network connections were established, indicating ongoing activity by user "employee" through the TOR browser.
-- **Action:** Multiple successful connections detected.
+Source: DeviceFileEvents
 
-### 6. File Creation - TOR Shopping List
-
-- **Timestamp:** `2024-11-08T22:27:19.7259964Z`
-- **Event:** The user "employee" created a file named `tor-shopping-list.txt` on the desktop, potentially indicating a list or notes related to their TOR browser activities.
-- **Action:** File creation detected.
-- **File Path:** `C:\Users\employee\Desktop\tor-shopping-list.txt`
 
 ---
 
 ## Summary
 
-The user "employee" on the "threat-hunt-lab" device initiated and completed the installation of the TOR browser. They proceeded to launch the browser, establish connections within the TOR network, and created various files related to TOR on their desktop, including a file named `tor-shopping-list.txt`. This sequence of activities indicates that the user actively installed, configured, and used the TOR browser, likely for anonymous browsing purposes, with possible documentation in the form of the "shopping list" file.
+On April 3, 2026, user noahlab on device noah-vm-lab conducted a deliberate and covert sequence of actions consistent with intentional unauthorized use of the Tor Browser.
+At 05:02 AM, the user silently installed the Tor Browser from their Downloads folder using the /S flag to suppress any visible installation window. Within 38 seconds at 05:03 AM, Tor had already established a confirmed live connection to the Tor network via a known relay port, indicating the user was familiar with the tool and acted quickly and deliberately.
+At 05:07 AM, the user opened the Tor Browser directly, spawning multiple browser and Tor processes, confirming active browsing over the Tor network. By 05:12 AM, Tor-related files had been copied to the Desktop and a file named tor-shoppinglist was created, strongly suggesting the user was actively engaged in Tor-based activity and documenting or planning purchases — potentially on dark web marketplaces.
+The entire sequence from silent install to active Tor browsing took less than 10 minutes, indicating this was not accidental or exploratory behaviour. The use of a silent install flag, the speed of execution, and the creation of a shopping list file all point to a user who was familiar with Tor, intentionally concealing their activity, and actively using the anonymised network for undisclosed purposes.
+This constitutes a confirmed policy violation and warrants immediate escalation, disciplinary review, and further forensic investigation into what was accessed or transacted over the Tor network.
 
 ---
 
 ## Response Taken
 
-TOR usage was confirmed on the endpoint `threat-hunt-lab` by the user `employee`. The device was isolated, and the user's direct manager was notified.
-
+TOR usage was confirmed on endpoint noah-vm-lab By user noahlab. The device was isolated and the user's direct manager was notified.
 ---
